@@ -5,7 +5,7 @@ from pynput.keyboard import Key, Listener
 
 set_idx = 0
 sound_arr_a = ["kick.wav","clap.wav","hat.wav", "openhat.wav", "snr.wav"]
-sets = ["elctroset", "acoustic", "vinyl"]
+sets = ["elctroset", "acoustic", "vinyl", "farts"]
 keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4}
 
 
