@@ -1,18 +1,27 @@
 from playsound import playsound
 import keyboard
 from pynput.keyboard import Key, Listener
+import os.path
+from os import path
 
 
 set_idx = 0
-sound_arr_a = ["kick.wav","clap.wav","hat.wav", "openhat.wav", "snr.wav"]
-sets = ["elctroset", "acoustic", "vinyl", "farts"]
-keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4}
+sound_arr_a = ["kick.wav","clap.wav","hat.wav", "openhat.wav", "snr.wav", "up.wav", "down.wav", "left.wav", "right.wav"]
+sets = ["elctroset", "acoustic", "vinyl", "farts", "cough"]
+keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4, "right" : 5, "up" : 6, "left" : 7, "down" : 8}
+sounds ={"elctroset": [], "acoustic":[], "vinyl":[], "farts":[], "cough":[]}
+
+def load_sounds():
+    for set in sets:
+        for sound in sound_arr_a:
+            sounds.get(set).append("./"+ set + "/" + sound)
 
 
 
 def play_key(key):
-    if(key in keys_dict):
-        playsound("./" + sets[set_idx] + "/" + sound_arr_a[keys_dict[key]], False)
+    path_exists = path.exists(sounds[sets[set_idx]][keys_dict[key]]) 
+    if(key in keys_dict and path_exists):
+        playsound(sounds[sets[set_idx]][keys_dict[key]], False)
 
 
 def on_changing_set():
@@ -24,10 +33,11 @@ def on_changing_set():
 def on_press(key):
     if hasattr(key, 'char'):
         key = '{0}'.format(key.char)
+        if key == '0':
+            on_changing_set()
+            return 
     else:
         key = '{0}'.format(key)[4:]
-    if key == '0':
-        on_changing_set()
     play_key(key)
 
 
@@ -39,46 +49,9 @@ def on_release(key):
         return False
 
 # Collect events until released
+load_sounds()
 with Listener(
         on_press=on_press,
         on_release=on_release) as listener:
     listener.join()
-
-
-
-# import pygame
-
-# pygame.init()
-# pygame.mixer.init()
-# pygame.display.set_caption("EVERYTHING IS A DRUM")
-# pygame.display.set_mode((400, 400), 0, 32)
-
-
-# set_idx = 0
-# sound_arr_a = ["kick.wav","clap.wav","hat.wav", "openhat.wav", "snr.wav"]
-# sets = ["elctroset", "acoustic", "vinyl"]
-# keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4}
-
-
-
-# def on_press(key):
-#     print(key)
-#     if(key in keys_dict):
-#         pygame.mixer.Sound("./" + sets[set_idx] + "/" + sound_arr_a[keys_dict[key]]).play()
-
-
-# def on_changing_set():
-#         global set_idx
-#         set_idx += 1
-#         set_idx %= len(sets)
-
-
-# while True:
-#     for event in pygame.event.get(): 
-#         if event.type == pygame.KEYDOWN:
-#             if event.key == pygame.K_ESCAPE:
-#                 pygame.quit(); #sys.exit() if sys is imported
-#             on_press(pygame.key.name(event.key))
-#             if event.key == pygame.K_0:
-#                 on_changing_set()
 
