@@ -3,7 +3,7 @@ from time import sleep
 from pynput import keyboard
 
 set_idx = 0
-sound_arr_a = ["kick.wav","clap.wav","hat.wav", "openhat.wav", "snr.wav"]
+sound_arr_a = ["kick.ogg","clap.ogg","hat.ogg", "openhat.ogg", "snr.ogg"]
 sets = ["elctroset", "acoustic", "vinyl", "farts"]
 keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4}
 sounds ={"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[]}
