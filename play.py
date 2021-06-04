@@ -12,17 +12,10 @@ def load_sounds():
     for set in sets:
         for sound in sound_arr_a:
             sounds.get(set).append(pygame.mixer.Sound("./"+ set + "/" + sound))
-    print(sounds)        
-
 
 def play_key(key):
     if(key in keys_dict):
-        print('**************************************')
-        print(set_idx)
-        print(sounds[sets[set_idx]])
-        print('--------------------------------------')
         pygame.mixer.Sound.play(sounds[sets[set_idx]][keys_dict[key]])
-
         
 def on_changing_set():
         global set_idx
@@ -56,8 +49,7 @@ def main():
     pygame.mixer.init(48000, -16, 1, 1024)
     load_sounds()
     wait_for_user_input()
-
-    
+  
 if __name__== "__main__":
       main()
 
