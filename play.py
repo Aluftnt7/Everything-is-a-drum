@@ -1,25 +1,28 @@
 import pygame.mixer
 from time import sleep
-import keyboard
-from pynput.keyboard import Key, Listener
-
+from pynput import keyboard
 
 set_idx = 0
 sound_arr_a = ["kick.wav","clap.wav","hat.wav", "openhat.wav", "snr.wav"]
 sets = ["elctroset", "acoustic", "vinyl", "farts"]
 keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4}
-sounds ={"elctroset": [], "acoustic":[], "vinyl":[], "farts":[]}
+sounds ={"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[]}
 
 def load_sounds():
     for set in sets:
         for sound in sound_arr_a:
             sounds.get(set).append(pygame.mixer.Sound("./"+ set + "/" + sound))
-    # print(sounds)        
+    print(sounds)        
 
 
 def play_key(key):
     if(key in keys_dict):
-        sounds[sets[set_idx]][keys_dict[key]].play()
+        print('**************************************')
+        print(set_idx)
+        print(sounds[sets[set_idx]])
+        print('--------------------------------------')
+        pygame.mixer.Sound.play(sounds[sets[set_idx]][keys_dict[key]])
+
         
 def on_changing_set():
         global set_idx
@@ -38,25 +41,24 @@ def on_press(key):
 
 
 def on_release(key):
-    # print('{0} release'.format(
-    #     key))
-    if key == Key.esc:
+    if key == keyboard.Key.esc:
         print("Done!")
         # Stop listener
         return False
-
-pygame.mixer.init(48000, -16, 2, 1024)
-load_sounds()
-
-# Collect events until released
-with Listener(
-        on_press=on_press,
-        on_release=on_release) as listener:
-    listener.join()
     
-# while True:
-#     sleep(1)
-    
+def wait_for_user_input():
+    listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+    listener.start()
+    listener.join() # wait for listener stop
 
+def main():
+    pygame.init()
+    pygame.mixer.init(48000, -16, 1, 1024)
+    load_sounds()
+    wait_for_user_input()
+
+    
+if __name__== "__main__":
+      main()
 
 
