@@ -1,6 +1,7 @@
 import pygame.mixer
 from time import sleep
 from pynput import keyboard
+import time
 
 set_idx = 0
 sound_arr_a = ["kick.ogg","clap.ogg","hat.ogg", "openhat.ogg", "snr.ogg"]
@@ -11,11 +12,13 @@ sounds ={"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[]}
 def load_sounds():
     for set in sets:
         for sound in sound_arr_a:
-            sounds.get(set).append(pygame.mixer.Sound("./"+ set + "/" + sound))
+            sounds.get(set).append(pygame.mixer.Sound("/home/pi/Desktop/burn/"+ set + "/" + sound))
+            print(sound)
 
 def play_key(key):
     if(key in keys_dict):
-        pygame.mixer.Sound.play(sounds[sets[set_idx]][keys_dict[key]])
+        pygame.mixer.Channel(keys_dict[key]).play(pygame.mixer.Sound(sounds[sets[set_idx]][keys_dict[key]]))
+    
         
 def on_changing_set():
         global set_idx
@@ -45,8 +48,10 @@ def wait_for_user_input():
     listener.join() # wait for listener stop
 
 def main():
+    pygame.mixer.pre_init(48000, -16, len(keys_dict), 1024)
+    pygame.mixer.quit()
     pygame.init()
-    pygame.mixer.init(48000, -16, 1, 1024)
+    pygame.mixer.init(48000, -16, len(keys_dict), 1024)
     load_sounds()
     wait_for_user_input()
   

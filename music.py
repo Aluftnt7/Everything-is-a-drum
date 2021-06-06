@@ -3,10 +3,12 @@ import keyboard
 from pynput.keyboard import Key, Listener
 import os.path
 from os import path
+from pydub import AudioSegment
+from pydub.playback import play
 
 
 set_idx = 0
-sound_arr_a = ["kick.wav","clap.wav","hat.wav", "openhat.wav", "snr.wav", "up.wav", "down.wav", "left.wav", "right.wav"]
+sound_arr_a = ["kick.ogg","clap.ogg","hat.ogg", "openhat.ogg", "snr.ogg", "up.ogg", "down.ogg", "left.ogg", "right.ogg"]
 sets = ["elctroset", "acoustic", "vinyl", "farts", "cough"]
 keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4, "right" : 5, "up" : 6, "left" : 7, "down" : 8}
 sounds ={"elctroset": [], "acoustic":[], "vinyl":[], "farts":[], "cough":[]}
@@ -19,9 +21,10 @@ def load_sounds():
 
 
 def play_key(key):
-    path_exists = path.exists(sounds[sets[set_idx]][keys_dict[key]]) 
-    if(key in keys_dict and path_exists):
-        playsound(sounds[sets[set_idx]][keys_dict[key]], False)
+        print('playing')
+        sound = AudioSegment.from_file('/home/pi/Desktop/burn/elctroset/kick.ogg')
+        play(sound)
+        #daadsadplaysound('/home/pi/Desktop/burn/elctroset/kick.wav')
 
 
 def on_changing_set():
