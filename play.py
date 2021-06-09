@@ -7,9 +7,9 @@ from os import path
 
 set_idx = 0
 sound_arr_a = ["kick.ogg","clap.ogg","hat.ogg", "openhat.ogg", "snr.ogg", "left.ogg", "right.ogg", "up.ogg","down.ogg"]
-sets = ["elctroset", "acoustic", "vinyl", "farts", "punch"]
+sets = ["elctroset", "acoustic", "vinyl", "farts", "punch", "family_guy", "tank_drum"]
 keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4, "right" : 5, "up" : 6, "left" : 7, "down" : 8}
-sounds ={"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[], "punch":[]}
+sounds ={"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[], "punch":[], "family_guy":[], "tank_drum":[]}
 
 def load_sounds():
     for set in sets:
@@ -22,7 +22,8 @@ def load_sounds():
 def play_key(key):
     
     if(key in keys_dict and keys_dict[key] < len(sounds[sets[set_idx]])):
-        pygame.mixer.Channel(keys_dict[key]).play(pygame.mixer.Sound(sounds[sets[set_idx]][keys_dict[key]]))
+        #pygame.mixer.Channel(keys_dict[key]).play(pygame.mixer.Sound(sounds[sets[set_idx]][keys_dict[key]]))
+        pygame.mixer.find_channel(True).play(pygame.mixer.Sound(sounds[sets[set_idx]][keys_dict[key]]))
     
         
 def on_changing_set():
