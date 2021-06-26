@@ -15,3 +15,16 @@ sudo python3 -m pip install --force-reinstall adafruit-blinka
 ```
 sudo python3 -m pip install --force-reinstall
 ```
+
+CircuitPython Libraries LED lib and examples are taken from:
+https://circuitpython.org/libraries  (Bundle Version py)
+
+### LED settings in files
+
+```
+#Update to match the pin connected to your NeoPixels
+`pixel_pin = board.D18`
+#Update to match the number of NeoPixels you have connected
+#5 meters neopixel strip
+pixel_num = 300
+```
