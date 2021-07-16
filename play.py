@@ -25,9 +25,9 @@ rainbow_chase = RainbowChase(pixels, speed=0.1, size=3, spacing=2, step=8)
 is_not_touched = True
 first_touch = 0
 set_idx = 0
-sound_arr_a = ["kick.ogg","clap.ogg","hat.ogg", "openhat.ogg", "snr.ogg", "left.ogg", "right.ogg", "up.ogg","down.ogg", "click.ogg"]
+sound_arr_a = ["hbongo.ogg","lbongo.ogg","ltom.ogg","mtom.ogg","htom.ogg", "clap.ogg", "openhat.ogg", "kick.ogg", "snr.ogg", "stick.ogg","cymbal.ogg", "gong.ogg"]
 sets = ["family_guy","elctroset", "acoustic", "vinyl", "farts", "punch", "tank_drum"]
-keys_dict = {"w" : 0, "a" : 1, "s" : 2, "d" : 3, "space" : 4, "right" : 5, "up" : 6, "left" : 7, "down" : 8, "click" : 9}
+keys_dict = {"w" : 0, "a" : 1,"s" : 2,"d" : 3,"f" : 4,"g" : 5,"up": 6,"down": 7,"left" : 8,"right" : 9,"click" : 10,"space" : 11}
 sounds ={"family_guy": [],"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[], "punch":[], "tank_drum":[]}
 
 
@@ -97,11 +97,11 @@ def blink(first_led, last_led):
         
 
         
-def on_changing_set():
+def on_changing_set(key):
         global set_idx
         set_idx += 1
         set_idx %= len(sets) 
-        pygame.mixer.Channel(0).play(pygame.mixer.Sound('/home/pi/Desktop/burn_with_leds/general_sounds/change_preset.ogg'))
+        pygame.mixer.Channel(0).play(pygame.mixer.Sound(sounds[sets[set_idx]][keys_dict[key]]))
         while pygame.mixer.Channel(0).get_busy():
             chase.animate()
             pixels.fill((0,0,0))
@@ -138,7 +138,7 @@ def on_press(key):
     else:
         key = '{0}'.format(key)[4:]
         if key == 'space':
-            on_changing_set()
+            on_changing_set(key)
             return
     play_key(key)
 
