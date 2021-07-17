@@ -5,19 +5,20 @@ import time
 import os
 import board
 import neopixel
+import random
 
 from threading import Thread
 
 from adafruit_led_animation.animation.chase import Chase
 from adafruit_led_animation.animation.rainbowchase import RainbowChase
-from adafruit_led_animation.color import PURPLE, WHITE, AMBER, JADE, MAGENTA, ORANGE
+from adafruit_led_animation.color import PURPLE, WHITE, AMBER, JADE, MAGENTA, ORANGE, GOLD, PINK, AQUA, CYAN, TEAL, RED, YELLOW, GREEN
 
 # Update to match the pin connected to your NeoPixels
 pixel_pin = board.D18
 # Update to match the number of NeoPixels you have connected
-pixel_num = 300
+pixel_num = 599
 
-pixels = neopixel.NeoPixel(pixel_pin, 300, brightness=0.5, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, 599, brightness=0.5, auto_write=False)
 
 chase = Chase(pixels, speed=0.1, size=3, spacing=0, color=WHITE)
 rainbow_chase = RainbowChase(pixels, speed=0.1, size=3, spacing=2, step=8)
@@ -25,15 +26,15 @@ rainbow_chase = RainbowChase(pixels, speed=0.1, size=3, spacing=2, step=8)
 is_not_touched = True
 first_touch = 0
 set_idx = 0
-sound_arr_a = ["hbongo.ogg","lbongo.ogg","ltom.ogg","mtom.ogg","htom.ogg", "clap.ogg", "openhat.ogg", "kick.ogg", "snr.ogg", "stick.ogg","cymbal.ogg", "gong.ogg"]
+sound_arr_a = ["clap.ogg","htom.ogg","mtom.ogg", "ltom.ogg","hbongo.ogg","lbongo.ogg","openhat.ogg", "kick.ogg", "snr.ogg","stick.ogg", "cymbal.ogg","gong.ogg"]
 sets = ["family_guy","elctroset", "acoustic", "vinyl", "farts", "punch", "tank_drum"]
-keys_dict = {"w" : 0, "a" : 1,"s" : 2,"d" : 3,"f" : 4,"g" : 5,"up": 6,"down": 7,"left" : 8,"right" : 9,"click" : 10,"space" : 11}
+keys_dict = {"w" : 4, "a" : 5,"s" : 3,"d" : 2,"f" : 1,"g" : 0,"up": 6,"down": 7,"left" : 8,"right" : 9,"click" : 10,"space" : 11}
 sounds ={"family_guy": [],"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[], "punch":[], "tank_drum":[]}
-
-
+led_arr ={ 0:[0,60],1:[61,120],2:[121,180],3:[181,222],4:[223,300],5:[301,380],6:[381,425],7:[426,469], 8:[470,514],9:[515,558],10:[559,599]}
+color_list = [PURPLE, WHITE, AMBER, JADE, MAGENTA, ORANGE, GOLD, PINK, AQUA, CYAN, TEAL, RED, YELLOW, GREEN]
 
 def load_sounds():
-    base_path = os.getenv("DRUM_HOME","/home/pi/Desktop/burn_with_leds")
+    base_path = os.getenv("DRUM_HOME","/home/pi/projects/Everything-is-a-drum")
     for set in sets:
         for sound in sound_arr_a:
             path_exists = os.path.exists(base_path + "/" + set + "/" + sound)
@@ -51,52 +52,24 @@ def play_key(key):
         handle_blink(keys_dict[key])
         is_not_touched = False
 
-        
-
-
 def handle_blink(key):
-    if(key == 0):
+    if(key == 11):
         pulse_all()
         return
-    first_led , last_led = define_pixels(key)
-    blink(first_led, last_led)
-    
-
-def define_pixels(key):
-    first_led = 0
-    last_led = 0
-
-    if(key <= 2):
-        first_led = 0
-        last_led = 90
-    elif(key > 2 and key <= 5):
-        first_led = 90
-        last_led = 180
-    elif(key > 5 and key <= 8):
-        first_led = 180
-        last_led = 300
-    
-    return first_led, last_led
-    
-    
-    
+    blink(led_arr[key][0],led_arr[key][1])
+        
 def pulse_all():
         pixels.fill((255,255,255))
         pixels.show()
      
-
-    
 def blink(first_led, last_led):
 
-        red = (225,0,0)
-        pixels[first_led:last_led] = [red] * (len(pixels))
+        pixels[first_led:last_led] = [random.choice(color_list)] * (len(pixels))
         pixels.show()
         time.sleep(0.001)
         pixels.fill((0,0,0))
         pixels.show()
-        
 
-        
 def on_changing_set(key):
         global set_idx
         set_idx += 1
@@ -104,14 +77,9 @@ def on_changing_set(key):
         pygame.mixer.Channel(0).play(pygame.mixer.Sound(sounds[sets[set_idx]][keys_dict[key]]))
         while pygame.mixer.Channel(0).get_busy():
             chase.animate()
-            pixels.fill((0,0,0))
-            pixels.show()
+           # pixels.fill((0,0,0))
+           # pixels.show()
         
-
-
-
-        
-    
 def run_leds():
     global first_touch
     global is_not_touched
