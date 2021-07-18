@@ -27,9 +27,9 @@ is_not_touched = True
 first_touch = 0
 set_idx = 0
 sound_arr_a = ["clap.ogg","htom.ogg","mtom.ogg", "ltom.ogg","hbongo.ogg","lbongo.ogg","openhat.ogg", "kick.ogg", "snr.ogg","stick.ogg", "cymbal.ogg","gong.ogg"]
-sets = ["family_guy","elctroset", "acoustic", "vinyl", "farts", "punch", "tank_drum"]
+sets = ["family_guy","elctroset", "acoustic", "vinyl", "farts", "punch", "tank_drum", "marimba", "glockenspiel"]
 keys_dict = {"w" : 4, "a" : 5,"s" : 3,"d" : 2,"f" : 1,"g" : 0,"up": 6,"down": 7,"left" : 8,"right" : 9,"click" : 10,"space" : 11}
-sounds ={"family_guy": [],"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[], "punch":[], "tank_drum":[]}
+sounds ={"family_guy": [],"elctroset": [], "acoustic":[], "vinyl":[] , "farts":[], "punch":[], "tank_drum":[], "marimba":[], "glockenspiel":[]}
 led_arr ={ 0:[0,60],1:[61,120],2:[121,180],3:[181,222],4:[223,300],5:[301,380],6:[381,425],7:[426,469], 8:[470,514],9:[515,558],10:[559,599]}
 color_list = [PURPLE, WHITE, AMBER, JADE, MAGENTA, ORANGE, GOLD, PINK, AQUA, CYAN, TEAL, RED, YELLOW, GREEN]
 
