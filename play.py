@@ -53,7 +53,7 @@ def play_key(key):
         is_not_touched = False
 
 def handle_blink(key):
-    if(key == 11):
+    if(key == 11 or key == 7):
         pulse_all()
         return
     blink(led_arr[key][0],led_arr[key][1])
