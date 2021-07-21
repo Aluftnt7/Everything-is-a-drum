@@ -29,3 +29,19 @@ https://circuitpython.org/libraries  (Bundle Version py)
 #5 meters neopixel strip
 pixel_num = 300
 ```
+
+### Set autostart
+
+```
+sudo nano /etc/xdg/lxsession/LXDE-pi/autostart
+
+
+@lxpanel --profile LXDE-pi
+@pcmanfm --desktop --profile LXDE-pi
+@xscreensaver -no-splash
+sleep 60
+@sudo /usr/bin/python3 /home/pi/projects/Everything-is-a-drum/play.py
+
+```
+
+
